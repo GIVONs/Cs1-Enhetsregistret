@@ -1,6 +1,4 @@
-﻿//                              Dag 1 & 2
-
-string enhet1 = "Laptopsal 1";
+﻿string enhet1 = "Laptopsal 1";
 string id1 = "ID-100";
 string status1 = "Aktiv";
 int price1 = 250;
@@ -15,24 +13,8 @@ string id3 = "ID-300";
 string status3 = "Aktiv";
 int price3 = 800;
 
-// Rad 2 i vår register 
-string row2 =
-    id2 + " | "
-    + "Namn: " + enhet2 + " | "
-    + "Price: " + price2 + " kr | "
-    + "Status: " + status2;
-
-// Rad 3 i vår register
-string row3 =
-    id3 + " | "
-    + "Namn: " + enhet3 + " | "
-    + "Price: " + price3 + " kr | "
-    + "Status: " + status3;
-
-
-// ---------------------------------------------------------------
-
-//                      Dag 3 - Självstudier 9 Sept
+//-----------------------------
+// Enhet 4 - med inmatning
 Console.WriteLine("\nMata in information om enhet 4:\nAnge ID: ");
 string id4 = Console.ReadLine();
 
@@ -44,28 +26,51 @@ int price4 = Convert.ToInt16(Console.ReadLine());
 
 Console.WriteLine("Ange status: ");
 string status4 = Console.ReadLine();
+// ---------------------------
 
-// Rad 4
+// Beräkningar:
+double moms = 0.25;
+double bruttoPrice4 = price4 * (1 + moms);
 
+// Rows:
+string row1 =
+    id1 + " | "
+    + "Namn: " + enhet1 + " | "
+    + "Price: " + price1 + " kr | "
+    + "Status: " + status1;
+string row2 =
+    id2 + " | "
+    + "Namn: " + enhet2 + " | "
+    + "Price: " + price2 + " kr | "
+    + "Status: " + status2;
+string row3 =
+    id3 + " | "
+    + "Namn: " + enhet3 + " | "
+    + "Price: " + price3 + " kr | "
+    + "Status: " + status3;
 string row4 =
     id4 + " | "
     + "Namn: " + enhet4 + " | "
-    + "Price: " + price4 + " kr | "
+    + "Pris exkl. moms: " + price4 
+    + " kr | Pris inkl.moms: " 
+    + bruttoPrice4 + " kr | " 
     + "Status: " + status4;
 
 
-// -----                ALL UTMATNING:                ----
+// -----                ALL UTMATNING:        -        ----
 Console.WriteLine("Emnhetsregistret:");
 Console.WriteLine("=======================");
 
-Console.WriteLine($"\n{id1} | Namn: {enhet1} | Price: {price1} kr | Status: {status1.ToString()}");
-Console.WriteLine(Convert.ToString(row2));
+Console.WriteLine($"\n{row1}");
+Console.WriteLine($"{row2}");
 Console.WriteLine($"{row3}");
-
-Console.WriteLine("\nNy enhet:");
-Console.WriteLine(Convert.ToString(row4));
+Console.WriteLine($"{row4}");
 
 Console.WriteLine("\n=======================");
 
-Console.WriteLine("2 enheter registerarde");
+Console.WriteLine("4 enheter registerarde");
 
+int totalPrice = price1 + price2 + price3 + price4;
+double bruttoPris = (price1 + price2 + price3 + price4) * (1 * moms);
+
+Console.WriteLine($"\nTotalt värde exkl. moms: {totalPrice} kr.");
