@@ -64,6 +64,7 @@ Console.WriteLine("=======================");
 Console.WriteLine($"\n{row1}");
 Console.WriteLine($"{row2}");
 Console.WriteLine($"{row3}");
+Console.WriteLine("\nNy enhet registrerat: ");
 Console.WriteLine($"{row4}");
 
 Console.WriteLine("\n=======================");
@@ -74,3 +75,37 @@ int totalPrice = price1 + price2 + price3 + price4;
 double bruttoPris = (price1 + price2 + price3 + price4) * (1 * moms);
 
 Console.WriteLine($"\nTotalt värde exkl. moms: {totalPrice} kr.");
+
+// Dag 3:
+bool priceWithRange = price4 > 300 && price4 <= 700;
+bool highPrice = price4 >= 700;
+
+if (highPrice)
+{
+    Console.WriteLine("\nProdukten har hög kostnad.");
+}
+else if (priceWithRange)
+{
+    Console.WriteLine("\nPrisen ligger i normal kostnad.");
+}
+else
+{
+    Console.WriteLine("\nProdukten har låg kostnad.");
+}
+
+// Switch sats:
+switch (status4) // Vi vill läsa av värdet på status4 (Oftast jämföra strängvärden men också andra saker)
+{
+    case "Aktiv":
+        Console.WriteLine("Status är aktiv");
+        break;
+    case "Inaktiv":
+        Console.WriteLine("Status är inaktiv.");
+        break;
+    case "Service":
+        Console.WriteLine("Åtgärder behövs");
+        break;
+    default:
+        Console.WriteLine("Nu valde du en status som inte finns.");
+        break;
+}
