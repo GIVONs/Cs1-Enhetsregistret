@@ -131,7 +131,7 @@ else if (enhetstyp4 == "Övrigt" || status4 == "Inaktiv") { Console.WriteLine("K
 else { Console.WriteLine("Produkten är i normal skick"); }
 
 // Riskbedömning (Del 8):
-Console.WriteLine("RISKBEDÖMNING")
+Console.WriteLine("RISKBEDÖMNING");
 if (högRisk) { Console.WriteLine("Riskbedömning: Hög risk"); }
 else if (medelRisk) { Console.WriteLine("Riskbedömning: Medelrisk"); }
 else { Console.WriteLine("Riskbedömning: Låg risk"); }
