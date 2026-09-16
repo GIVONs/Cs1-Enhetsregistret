@@ -1,4 +1,6 @@
-﻿string enhet1 = "Projektor";
+﻿using System.Net;
+
+string enhet1 = "Projektor";
 //string enhetstyp1 = "Projektor";
 string id1 = "ID-100";
 string status1 = "Aktiv";
@@ -64,15 +66,15 @@ string row3 =
 string row4 =
     id4 + " | "
     + "Namn: " + enhet4 + " | "
-    + "Pris exkl. moms: " + price4 
-    + " kr | Pris inkl.moms: " 
-    + bruttoPrice4 + " kr | " 
+    + "Pris exkl. moms: " + price4
+    + " kr | Pris inkl.moms: "
+    + bruttoPrice4 + " kr | "
     + "Status: " + status4;
 
 // -----                ALL UTMATNING:                  ----
 Console.WriteLine("=======================");
-Console.WriteLine("Emnhetsregistret");
-Console.WriteLine($"\n{row1}");
+Console.WriteLine("ENHETREGISTRET");
+Console.WriteLine($"{row1}");
 Console.WriteLine($"{row2}");
 Console.WriteLine($"{row3}");
 
@@ -80,56 +82,63 @@ Console.WriteLine("\n=======================");
 Console.WriteLine("\nNy enhet registrerat: ");
 Console.WriteLine($"{row4}");
 
+// TYPINFORMATION
+Console.WriteLine("\nTYPINFORMATION");
 switch (enhetstyp4)
 {
     case "Dator":
-        Console.WriteLine("\nProduktbeskrivning: Utrustning för datorarbete.");
+        Console.WriteLine("Produktbeskrivning: Utrustning för datorarbete.");
         break;
     case "Projektor":
-        Console.WriteLine("\nProduktbeskrivning: Utrustning för presentation.");
+        Console.WriteLine("Produktbeskrivning: Utrustning för presentation.");
         break;
     case "Skärm":
-        Console.WriteLine("\nProduktbeskrivning: Bildskärmsutrustning.");
+        Console.WriteLine("Produktbeskrivning: Bildskärmsutrustning.");
         break;
     default:
-        Console.WriteLine("\nProduktbeskrivning: Annan registrerad uttrustning");
-    break;
+        Console.WriteLine("Produktbeskrivning: Annan registrerad uttrustning");
+        break;
 }
 
 // Servicebedömning
+Console.WriteLine("SERVICEBEDÖMNING");
 switch (status4)
 {
     case "Aktiv":
-        Console.WriteLine("\nService status: Aktiv");
+        Console.WriteLine("Service status: Aktiv");
         break;
     case "Inaktiv":
-        Console.WriteLine("\nService status: Inaktiv.");
+        Console.WriteLine("Service status: Inaktiv.");
         break;
     case "Service":
-        Console.WriteLine("\nService status: I servicebehov");
+        Console.WriteLine("Service status: I servicebehov");
         break;
     default:
-        Console.WriteLine("\nOkänd status.");
+        Console.WriteLine("Service status: Okänd status.");
         break;
 }
 
 // Kostnadsbedömning:
-if (highPrice) { Console.WriteLine("\nProdukten har hög kostnad."); }
-else if (priceWithRange) { Console.WriteLine("\nPrisen ligger i normal kostnad."); }
-else { Console.WriteLine("\nProdukten har låg kostnad."); }
+Console.WriteLine("kOSTNADSBEDÖMNING");
+if (highPrice) { Console.WriteLine("Produkten har hög kostnad."); }
+else if (priceWithRange) { Console.WriteLine("Prisen ligger i normal kostnad."); }
+else { Console.WriteLine("Produkten har låg kostnad."); }
 
 // Prioritering:
-if(prioProdukt) { Console.WriteLine("\nPrioriterad produkt!"); }
-else if (enhetstyp4 == "Övrigt" || status4 == "Inaktiv") { Console.WriteLine("\nKontroll krävs"); }
-else { Console.WriteLine("\nProdukten är i normal skick"); }
+Console.WriteLine("PRIORITERINGSSTATUS");
+if (prioProdukt) { Console.WriteLine("Prioriterad produkt!"); }
+else if (enhetstyp4 == "Övrigt" || status4 == "Inaktiv") { Console.WriteLine("Kontroll krävs"); }
+else { Console.WriteLine("Produkten är i normal skick"); }
 
 // Riskbedömning (Del 8):
-if (högRisk) { Console.WriteLine("\nRiskbedömning: Hög risk"); }
-else if (medelRisk) { Console.WriteLine("\nRiskbedömning: Medelrisk"); }
-else { Console.WriteLine("\nRiskbedömning: Låg risk"); }
+Console.WriteLine("RISKBEDÖMNING")
+if (högRisk) { Console.WriteLine("Riskbedömning: Hög risk"); }
+else if (medelRisk) { Console.WriteLine("Riskbedömning: Medelrisk"); }
+else { Console.WriteLine("Riskbedömning: Låg risk"); }
 
-// SLUTRAPPORT (Del9):
+// Sammanfattning (Del9):
 Console.WriteLine("\n=======================");
 Console.WriteLine("\nSAMMANFATTNING TOTALT ");
 Console.WriteLine("\nRegister: 4 enheter registerarde");
 Console.WriteLine($"Totalt värde exkl. moms: {totalPrice} kr.");
+
