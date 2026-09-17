@@ -1,31 +1,95 @@
 ﻿using System.Net;
 using System.Security.Cryptography.X509Certificates;
+// Startvärden:
+double moms = 0.25;
 
 string enhet1 = "Projektor";
-//string enhetstyp1 = "Projektor";
+string enhetsTyp1 = "Projektor";
 string id1 = "ID-100";
 string status1 = "Aktiv";
 int price1 = 250;
 
 string enhet2 = "Samsung Display";
-//string enhetstyp2 = "Bildskärmsutrustning";
+string enhetsTyp2 = "Bildskärmsutrustning";
 string id2 = "ID-200";
 string status2 = "Aktiv";
 int price2 = 100;
 
 string enhet3 = "Laptop";
-// string enhetstyp3 = "Dator";
+string enhetsTyp3 = "Dator";
 string id3 = "ID-300";
 string status3 = "Service";
 int price3 = 800;
 
-bool programIsOn = true;
+// Default printed rows:
+string row1 =
+    $"""
 
+    ENHET 1 
+    ID:                 {id1}
+    Namn:               {enhet1}
+    Enhetstyp:          {enhetsTyp1}
+
+    Status:             {status1}
+
+    Pris:               {price1 * (1 + moms)} kr.
+    Pris exkl.moms:     {price1} kr
+
+    ---------------------------------------------
+    """;
+
+string row2 =
+    $"""
+
+    ENHET 2
+    ID:                 {id2}
+    Namn:               {enhet2}
+    Enhetstyp:          {enhetsTyp2}
+
+    Status:             {status2}
+
+    Pris:               {price2 * (1 + moms)} kr.
+    Pris exkl.moms:     {price2} kr.
+
+    ---------------------------------------------
+    """;
+
+string row3 =
+    $"""
+
+    ENHET 3 
+    ID:                 {id3}
+    Namn:               {enhet3}
+    Enhetstyp:          {enhetsTyp3}
+
+    Status:             {status3} 
+
+    Pris:               {price3 * (1 + moms)} kr.
+    Pris exkl.moms:     {price3} kr.
+
+    ---------------------------------------------
+    """;
+// Returnerar dessa värden till topp (ersätt dessa):
+string result4 = null;
+int totalPriceMed4 = 0;
+double totalMomsPrisMed4 = 0;
+double bruttoPrisMed4 = 0;
+
+bool programIsOn = true;
+Console.WriteLine("Välkommen till enhetsregistret!");
 while (programIsOn)
 {
+    // Generella beräkningar
+    int totalPrice = price1 + price2 + price3;
+    double momsPåPris = totalPrice * (1 * moms);
+    double bruttoPris = totalPrice + momsPåPris;
+
+    int riskScore = 0;
+
     // -----------------------------------------
+    Console.WriteLine("\n");
     Console.WriteLine("""
-        Välkommen till enhetsregistret, du har 3 val:
+        Du har 3 val:
 
         [1] - Visa alla produkter
 
@@ -36,166 +100,298 @@ while (programIsOn)
         """);
 
     int valSiffra = Convert.ToInt16(Console.ReadLine());
-    switch (valSiffra)
+    if (valSiffra == 1 || valSiffra == 2 || valSiffra == 3)
     {
-        case 1:
-            // Rows:
-            string row1 =
-                id1 + " | "
-                + "Namn: " + enhet1 + " | "
-                + "Price: " + price1 + " kr | "
-                + "Status: " + status1;
-            string row2 =
-                id2 + " | "
-                + "Namn: " + enhet2 + " | "
-                + "Price: " + price2 + " kr | "
-                + "Status: " + status2;
-            string row3 =
-                id3 + " | "
-                + "Namn: " + enhet3 + " | "
-                + "Price: " + price3 + " kr | "
-                + "Status: " + status3;
 
-            // -----                ALL UTMATNING:                  ----
-            Console.WriteLine("=======================");
-            Console.WriteLine("ENHETREGISTRET");
-            Console.WriteLine($"{row1}");
-            Console.WriteLine($"{row2}");
-            Console.WriteLine($"{row3}");
+        switch (valSiffra)
+        {
+            case 1:
+                // -----                ALL UTMATNING:                  ----
+                Console.Clear();
+                Console.WriteLine("------------- ENHETREGISTRET ------------");
+                Console.WriteLine($"{row1}");
+                Console.WriteLine($"{row2}");
+                Console.WriteLine($"{row3}");
+                if(result4 != null)
+                {
+                    Console.WriteLine($"{result4}");
+                }
 
-            // Sammanfattning (Del9):
-            Console.WriteLine("\n=======================");
-            Console.WriteLine("\nSAMMANFATTNING TOTALT ");
-            Console.WriteLine("\nRegister: 4 enheter registerarde\n");
-            break;
-        case 2:
-            
-            // Enhet 4 - med inmatning och felhantering för inmatning:
-            Console.WriteLine("\nMata in information om enhet 4.\nAnge namn på enheten: ");
-            string enhet4 = Console.ReadLine();
-            Console.WriteLine("Ange ID: ");
-            string id4 = Console.ReadLine();
-            Console.WriteLine("Ange pris: ");
-            int price4 = Convert.ToInt16(Console.ReadLine());
-            Console.WriteLine("Ange status (Aktiv/Inaktiv/Service): ");
-            string status4 = Console.ReadLine();
-            Console.WriteLine("Är pdorukten en Dator, Projektor eller Skärm? (om du är osäker skriv 'Övrigt')\nAnge svar: ");
-            string enhetstyp4 = Console.ReadLine();
-            Console.WriteLine("Kontrollfrågor:\n");
+                Console.WriteLine("\n=============================================");
+                Console.WriteLine("-------- SAMMANFATTNING TOTALT -------");
+                if(result4 != null)
+                {
+                    Console.WriteLine("\nRegister: 4 enheter registerarde\n");
+                    Console.WriteLine($"""
+                        Total pris exkl. moms:              {totalPriceMed4} kr.
+                        Total pris inkl. moms (brutto):     {bruttoPrisMed4} kr.            
+                        """);
+                    Console.WriteLine("=============================================");
+                } else
+                {
+                    Console.WriteLine("\nRegister: 3 enheter registerarde\n");
+                    Console.WriteLine($"""
+                        Total pris exkl. moms:              {totalPrice} kr.
+                        Total pris inkl. moms (brutto):     {bruttoPris} kr.            
+                        """);
+                    Console.WriteLine("=============================================");
+                }
+                break;
 
-            Console.WriteLine("Ska produkten markeras som 'kritsik'? [J/N]");
-            string kritiskPin = Console.ReadLine();
-          
+            case 2:
+                //  --------------------------- ENHET 4 ----------------------------------
+                string justExit = "exit";
 
-            // Beräkningar:
-            double moms = 0.25;
-            double bruttoPrice4 = price4 * (1 + moms);
+                Console.WriteLine("\nMata in information om enhet 4.\nAnge namn på enheten: ");
+                string enhet4 = Console.ReadLine();
+                if (enhet4 == justExit.ToLower() || enhet4 == null || enhet4.Trim() == "") break;
 
-            bool priceWithRange = price4 > 300 && price4 <= 700;
-            bool highPrice = price4 >= 700;
-            bool prioProdukt = highPrice && status4 == "Aktiv";
+                Console.WriteLine("Ange ID: ");
+                string id4 = Console.ReadLine();
+                if (id4 == justExit.ToLower() || id4 == null || id4.Trim() == "") break;
 
-            bool isKritisk = kritiskPin == "J"; // kan använda ToLower här och i andra bools
-            bool omKritisk = status4 == "Service" || isKritisk;
-            bool högRisk = status4 == "Service" && highPrice;
-            bool medelRisk = status4 == "Service" || status4 == "Inaktiv";
+                Console.WriteLine("Ange pris: ");
+                string inputPrice4 = Console.ReadLine();
+                if (inputPrice4 == justExit.ToLower()) break;
+                int price4 = 0; // The future return value after TryParse()
+                if (int.TryParse(inputPrice4, out price4))
+                { /*just continue without doing anything*/}
+                else
+                {
+                    Console.WriteLine("Fel inmatning, vänligen skriv enbart siffror");
+                    return;
+                }
 
-            // Kostnadsbedömning:
-            Console.WriteLine("KOSTNADSBEDÖMNING");
-            if (highPrice) { Console.WriteLine("Produkten har hög kostnad."); }
-            else if (priceWithRange) { Console.WriteLine("Prisen ligger i normal kostnad."); }
-            else { Console.WriteLine("Produkten har låg kostnad."); }
-
-            // Prioritering:
-            Console.WriteLine("PRIORITERINGSSTATUS");
-            if (prioProdukt) { Console.WriteLine("Prioriterad produkt!"); }
-            else if (enhetstyp4 == "Övrigt" || status4 == "Inaktiv") { Console.WriteLine("Kontroll krävs"); }
-            else { Console.WriteLine("Produkten är i normal skick"); }
-
-            // Riskbedömning (Del 8):
-            Console.WriteLine("RISKBEDÖMNING");
-            if (högRisk) { Console.WriteLine("Riskbedömning: Kritisk"); }
-            else if (medelRisk) { Console.WriteLine("Riskbedömning: Medelrisk"); }
-            else { Console.WriteLine("Riskbedömning: Låg risk"); }
-           
-            // Kritisk bedömning:
-            Console.WriteLine("KRIS STATUS:");
-            if (omKritisk) { Console.WriteLine("Teknisk kontroll krävs"); }
-            else if (status4 != "Service" && isKritisk == false)
-            { Console.WriteLine("Ingen omedelbar åtgärd"); }
-            else if (isKritisk && price4 >= 700)
-            { Console.WriteLine(""); }
-            else if (isKritisk && highPrice && (enhetstyp4 == "Porjektor" || enhetstyp4 == "Dator"))
-            { Console.WriteLine("VARNING: Kritisk dyr utrustning"); }
-
-            // Rad 4
-            string row4 =
-            id4 + " | "
-            + "Namn: " + enhet4 + " | "
-            + "Pris exkl. moms: " + price4
-            + " kr | Pris inkl.moms: "
-            + bruttoPrice4 + " kr | "
-            + "Status: " + status4;
-
-            int totalPrice = price1 + price2 + price3 + price4;
-            double bruttoPris = (price1 + price2 + price3 + price4) * (1 * moms);
-
-            Console.WriteLine("\n=======================");
-            Console.WriteLine("\nNy enhet registrerat: ");
-            Console.WriteLine($"{row4}");
-
-            // TYPINFORMATION
-            Console.WriteLine("\nTYPINFORMATION");
-            switch (enhetstyp4)
-            {
-                case "Dator":
-                    Console.WriteLine("Produktbeskrivning: Utrustning för datorarbete.");
+                Console.WriteLine("Ange status (Aktiv/Inaktiv/Service): ");
+                string status4 = Console.ReadLine();
+                status4.ToLower();
+                if (status4 == justExit.ToLower() 
+                    || status4 == null 
+                    || status4.Trim() == "" 
+                    || (status4 != "aktiv"
+                    && status4 != "inaktiv"
+                    && status4 != "service")) 
                     break;
-                case "Projektor":
-                    Console.WriteLine("Produktbeskrivning: Utrustning för presentation.");
-                    break;
-                case "Skärm":
-                    Console.WriteLine("Produktbeskrivning: Bildskärmsutrustning.");
-                    break;
-                default:
-                    Console.WriteLine("Produktbeskrivning: Annan registrerad uttrustning");
-                    break;
-            }
 
-            // Servicebedömning
-            Console.WriteLine("SERVICEBEDÖMNING");
-            switch (status4)
-            {
-                case "Aktiv":
-                    Console.WriteLine("Service status: Aktiv");
+                Console.WriteLine("Är produkten en Dator, Projektor eller Skärm? (om du är osäker skriv 'Övrigt')\nAnge svar: ");
+                string enhetsTyp4 = Console.ReadLine();
+                enhetsTyp4.ToLower();
+                if (enhetsTyp4 == justExit.ToLower() 
+                    || enhetsTyp4 == null 
+                    || enhetsTyp4.Trim() == ""
+                    || (enhetsTyp4 != "dator"
+                    && enhetsTyp4 != "projektor"
+                    && enhetsTyp4 != "skärm"
+                    && enhetsTyp4 != "övrigt")) 
                     break;
-                case "Inaktiv":
-                    Console.WriteLine("Service status: Inaktiv.");
-                    break;
-                case "Service":
-                    Console.WriteLine("Service status: I servicebehov");
-                    break;
-                default:
-                    Console.WriteLine("Service status: Okänd status.");
-                    break;
-            }
-            break;
-        case 3:
-            programIsOn = false;
-            break;
+
+                Console.Clear();
+                Console.WriteLine("\nKontrollfrågor:");
+                Console.WriteLine("Ska produkten markeras som 'kritsik'? [J/N]");
+                string kritiskMarkör = Console.ReadLine();
+                kritiskMarkör = kritiskMarkör.ToUpper();
+
+                // --------------------------- Beräkningar för Enhet 4 ------------------------------------
+                double bruttoPrice4 = price4 * (1 + moms);
+
+                bool priceWithRange = price4 > 300 && price4 <= 700;
+                bool highPrice = price4 >= 700;
+                bool prioProdukt = highPrice && status4 == "aktiv";
+
+                bool isKritisk = kritiskMarkör == "J";
+                bool omKritisk = status4 == "service" || isKritisk;
+                bool högRisk = status4 == "service" && highPrice;
+                bool medelRisk = status4 == "service" || status4 == "inaktiv";
+
+                // Risksystem - Beräkningar
+                bool checkScore = true;
+                while (checkScore)
+                {
+                    switch (status4)
+                    {
+                        case "service":
+                            riskScore += 3;
+                            break;
+                        case "inaktiv":
+                            riskScore += 2;
+                            break;
+                    }
+                    if(kritiskMarkör == "J") { riskScore += 4; }
+
+                    if(enhetsTyp4 == "projektor" && (price4 >= 900)) { riskScore += 2; } else if(enhetsTyp4 == "övrigt") { riskScore += 1; }
+
+                    if (highPrice) { riskScore += 2; }
+
+                    checkScore = false;
+                }
+
+                // Risknivå - Beräkningar
+                bool lowRiskScore = riskScore <= 2;
+                bool mediumRiskScore = riskScore >= 3 && riskScore <= 5;
+                bool highRiskScore = riskScore >= 6 && riskScore <= 8;
+                bool criticalRiskScore = riskScore >= 9;
+
+                // Rad 4:
+                string row4 =
+                    $"""
+
+                    ENHET 4
+                    ID:                 {id4}
+                    Namn:               {enhet4}
+                    Enhetstyp:          {char.ToUpper(enhetsTyp4[0]) + enhetsTyp4.Substring(1)}
+
+                    Status:             {char.ToUpper(status4[0]) + status4.Substring(1)}
+
+                    Pris:               {price4 * (1 * moms)} kr.
+                    Pris exkl.moms:     {price4} kr.
+
+                    ---------------------------------------------
+                    """;
+
+                Console.WriteLine("\n=======================");
+                Console.WriteLine("\nNy enhet registrerat: ");
+                Console.WriteLine($"{row4}");
+
+                // ------------------ REGLER (Utskrifter av Bedömningar) ------------------------
+                Console.WriteLine("\nALLMÄN BEDÖMNING\n");
+                // Kostnadsbedömning:
+                if (highPrice) { Console.WriteLine("Kostnadsbedömning: Produkten har hög kostnad.\n"); }
+                else if (priceWithRange) { Console.WriteLine("Kostnadsbedömning: Prisen ligger i normal kostnad.\n"); }
+                else { Console.WriteLine("Kostnadsbedömning: Produkten har låg kostnad.\n"); }
+
+                // Prioritering:
+                if (prioProdukt) { Console.WriteLine("Prioriteringsstatus: Prioriterad produkt!\n"); }
+                else if (enhetsTyp4 == "övrigt" || status4 == "inaktiv") { Console.WriteLine("Prioriteringsstatus: Kontroll krävs\n"); }
+                else { Console.WriteLine("Prioriteringsstatus: Produkten är i normal skick\n"); }
+
+                // Riskbedömning (Del 8):
+                if (högRisk) { Console.WriteLine("Riskbedömning: Kritisk\n"); }
+                else if (medelRisk) { Console.WriteLine("Riskbedömning: Medelrisk\n"); }
+                else { Console.WriteLine("Riskbedömning: Låg risk\n"); }
+
+                // Kritisk bedömning:
+                if (omKritisk) { Console.WriteLine("Kris status: Teknisk kontroll krävs\n"); }
+                else if (status4 != "service" && isKritisk == false)
+                { Console.WriteLine("Kris status: Ingen omedelbar åtgärd\n"); }
+                else if (isKritisk && price4 >= 700)
+                { Console.WriteLine(""); }
+                else if (isKritisk && highPrice && (enhetsTyp4 == "projektor" || enhetsTyp4 == "dator"))
+                { Console.WriteLine("VARNING: Kritisk dyr utrustning!\n"); }
+
+                // TYPINFORMATION
+                Console.WriteLine("\nTYPINFORMATION\n");
+                switch (enhetsTyp4)
+                {
+                    case "dator":
+                        Console.WriteLine("Produktbeskrivning: Utrustning för datorarbete.");
+                        break;
+
+                    case "projektor":
+                        Console.WriteLine("Produktbeskrivning: Utrustning för presentation.");
+                        break;
+
+                    case "skärm":
+                        Console.WriteLine("Produktbeskrivning: Bildskärmsutrustning.");
+                        break;
+
+                    default:
+                        Console.WriteLine("Produktbeskrivning: Annan registrerad uttrustning");
+                        break;
+                }
+
+                // Servicebedömning
+                Console.WriteLine("\nSERVICEBEDÖMNING\n");
+                switch (status4)
+                {
+                    case "aktiv":
+                        Console.WriteLine("""
+                            Service status: Aktiv
+
+                            ---------------------------------
+                            """);
+                        break;
+
+                    case "inaktiv":
+                        Console.WriteLine("""
+                            Service status: Inaktiv
+
+                            ---------------------------------
+                            """);
+                        break;
+
+                    case "service":
+                        Console.WriteLine("""
+                            Service status: I servicebehov
+
+                            ---------------------------------
+                            """);
+                        break;
+
+                    default:
+                        Console.WriteLine("""
+                            Service status: Okänd status
+
+                            ---------------------------------
+                            """);
+                        break;
+                }
+
+                // Riskpoäng - Bedöminng
+                Console.WriteLine("\nRISKBEDÖMNING\n");
+                if(lowRiskScore) 
+                {
+                    Console.WriteLine($"""
+                        Riskpoäng:  {riskScore}
+                        Risknivå:   Låg
+                        """);
+                } else if(mediumRiskScore)
+                {
+                    Console.WriteLine($"""
+                        Riskpoäng:  {riskScore}
+                        Risknivå:   Medel
+                        """);
+                }
+                else if(highRiskScore)
+                {
+                    Console.WriteLine($"""
+                        Riskpoäng:  {riskScore}
+                        Risknivå:   Hög
+                        """);
+                }
+                else if (criticalRiskScore)
+                {
+                    Console.WriteLine($"""
+                        Riskpoäng:  {riskScore}
+                        Risknivå:   Kritisk
+                        """);
+                }
+
+                // Returvärden
+                totalPriceMed4 = price1 + price2 + price3 + price4;
+                totalMomsPrisMed4 = (price1 + price2 + price3 + price4) * (1 * moms);
+                bruttoPrisMed4 = totalPriceMed4 + totalMomsPrisMed4;
+
+                result4 = row4;
+                break; // break för "case 2:"
+
+            case 3:
+                programIsOn = false;
+                break;
+        }
+    } else
+    {
+        Console.Clear();
+        Console.WriteLine("""
+
+            =========================================
+            Fel inmatning, välj en siffra mellan 1-3.
+            =========================================
+
+
+            """);
     }
 
-    // -----------------------------------------
 }
-
-
-
-
-
-
-
-
-
-
-/*Console.WriteLine($"Totalt värde exkl. moms: {totalPrice} kr.");*/
+Console.WriteLine("Klicka på valfri tangent för att avsluta...");
+Console.ReadKey();
 
