@@ -1,0 +1,54 @@
+// Default printed rows:
+string row1 =
+    $"""
+
+    ENHET 1 
+    ID:                 {id1}
+    Namn:               {enhet1}
+    Enhetstyp:          {enhetsTyp1}
+
+    Status:             {status1}
+
+    Pris:               {price1 * (1 + moms)} kr.
+    Pris exkl.moms:     {price1} kr
+
+    ---------------------------------------------
+    """;
+
+string row2 =
+    $"""
+
+    ENHET 2
+    ID:                 {id2}
+    Namn:               {enhet2}
+    Enhetstyp:          {enhetsTyp2}
+
+    Status:             {status2}
+
+    Pris:               {price2 * (1 + moms)} kr.
+    Pris exkl.moms:     {price2} kr.
+
+    ---------------------------------------------
+    """;
+
+string row3 =
+    $"""
+
+    ENHET 3 
+    ID:                 {id3}
+    Namn:               {enhet3}
+    Enhetstyp:          {enhetsTyp3}
+
+    Status:             {status3} 
+
+    Pris:               {price3 * (1 + moms)} kr.
+    Pris exkl.moms:     {price3} kr.
+
+    ---------------------------------------------
+    """;
+
+
+                    if (result4 != null)
+                {
+                    UI.ShowRow(id4, enhet4, enhetsTyp4, status4, price4, moms),
+                }

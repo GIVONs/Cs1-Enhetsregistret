@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using ConsoleApp1.UI.Helpers;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 // Startvärden:
 double moms = 0.25;
@@ -21,54 +22,12 @@ string id3 = "ID-300";
 string status3 = "Service";
 int price3 = 800;
 
-// Default printed rows:
-string row1 =
-    $"""
+/* string enhet4;
+string enhetstTyp4;
+string id4;
+string status4;
+int price4; */
 
-    ENHET 1 
-    ID:                 {id1}
-    Namn:               {enhet1}
-    Enhetstyp:          {enhetsTyp1}
-
-    Status:             {status1}
-
-    Pris:               {price1 * (1 + moms)} kr.
-    Pris exkl.moms:     {price1} kr
-
-    ---------------------------------------------
-    """;
-
-string row2 =
-    $"""
-
-    ENHET 2
-    ID:                 {id2}
-    Namn:               {enhet2}
-    Enhetstyp:          {enhetsTyp2}
-
-    Status:             {status2}
-
-    Pris:               {price2 * (1 + moms)} kr.
-    Pris exkl.moms:     {price2} kr.
-
-    ---------------------------------------------
-    """;
-
-string row3 =
-    $"""
-
-    ENHET 3 
-    ID:                 {id3}
-    Namn:               {enhet3}
-    Enhetstyp:          {enhetsTyp3}
-
-    Status:             {status3} 
-
-    Pris:               {price3 * (1 + moms)} kr.
-    Pris exkl.moms:     {price3} kr.
-
-    ---------------------------------------------
-    """;
 // Returnerar dessa värden till topp (ersätt dessa):
 string result4 = null;
 int totalPriceMed4 = 0;
@@ -88,16 +47,7 @@ while (programIsOn)
 
     // -----------------------------------------
     Console.WriteLine("\n");
-    Console.WriteLine("""
-        Du har 3 val:
-
-        [1] - Visa alla produkter
-
-        [2] - Mata in ny produkt
-
-        [3] - Stäng programmet
-
-        """);
+    UI.ShowMenu();
 
     int valSiffra = Convert.ToInt16(Console.ReadLine());
     if (valSiffra == 1 || valSiffra == 2 || valSiffra == 3)
@@ -109,12 +59,14 @@ while (programIsOn)
                 // -----                ALL UTMATNING:                  ----
                 Console.Clear();
                 Console.WriteLine("------------- ENHETREGISTRET ------------");
-                Console.WriteLine($"{row1}");
-                Console.WriteLine($"{row2}");
-                Console.WriteLine($"{row3}");
-                if(result4 != null)
+
+                Console.WriteLine(UI.ShowRow(id1, enhet1, enhetsTyp1, status1, price1, moms));
+                Console.WriteLine(UI.ShowRow(id2, enhet2, enhetsTyp2, status2, price2, moms));
+                Console.WriteLine(UI.ShowRow(id3, enhet3, enhetsTyp3, status3, price3, moms));
+
+                if (result4 != null)
                 {
-                    Console.WriteLine($"{result4}");
+                    Console.WriteLine(result4);
                 }
 
                 Console.WriteLine("\n=============================================");
@@ -208,6 +160,7 @@ while (programIsOn)
                 Console.WriteLine("\nKontrollfrågor:");
                 Console.WriteLine("Ska produkten markeras som 'kritsik'? [J/N]: ");
                 string kritiskMarkör = Console.ReadLine();
+
                 kritiskMarkör = kritiskMarkör.ToUpper();
                 if (kritiskMarkör == null || kritiskMarkör.Trim() == "" || (kritiskMarkör != "J" && kritiskMarkör != "N"))
                 {
@@ -273,22 +226,9 @@ while (programIsOn)
                 }
 
                 // ------------------ REGLER (Utskrifter av Bedömningar) ------------------------
-                // Rad 4:
-                string row4 =
-                    $"""
 
-                    ENHET 4
-                    ID:                 {id4}
-                    Namn:               {enhet4}
-                    Enhetstyp:          {char.ToUpper(enhetsTyp4[0]) + enhetsTyp4.Substring(1)}
+                string row4 = UI.ShowRow(id4, enhet4, enhetsTyp4, status4, price4, moms);
 
-                    Status:             {char.ToUpper(status4[0]) + status4.Substring(1)}
-
-                    Pris:               {price4 * (1 * moms)} kr.
-                    Pris exkl.moms:     {price4} kr.
-
-                    ---------------------------------------------
-                    """;
                 Console.Clear();
                 Console.WriteLine("\nNy enhet registrerat: ");
                 Console.WriteLine($"{row4}");
