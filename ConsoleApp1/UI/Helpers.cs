@@ -20,32 +20,35 @@ namespace ConsoleApp1.UI.Helpers
 
                 """);
         }
+
         public static void visaMoms(int totalPrice, double bruttoPris)
         {
 
         }
+
         public static decimal? readDecimal() // detta är en kontroll för att ange korrekt värde för decimal typ.
         {
             while(true)
             {
                 Console.Clear();
-                Console.WriteLine("Vänsligen skriv in ett värde");
+                Console.WriteLine("Vänligen skriv in ett värde");
                 Console.WriteLine("Skriv EXIT om du vill avbryta");
                 string input = Console.ReadLine();
 
                 if (input.ToUpper().Equals("EXIT"))
                 {
-                    return null;
+                    return null; // Return tar oss ut ur loopen.
                 }
 
                 bool readSuccess = decimal.TryParse(input, out var price);
                 if (!readSuccess)
                 {
                     Console.WriteLine("Vänligen skriv in ett giltlig värde");
+                    // Här finns ingen break eller return, så loopen fortsätter tills användaren skriver in ett giltigt värde eller EXIT.
                 }
                 else
                 {
-                    return price;
+                    return price; // Return tar oss ut ur loopen.
                 }
             }
         }
