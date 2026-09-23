@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConsoleApp1.UI.Helpers
+namespace ConsoleApp1.Helpers
 {
     public static class UI
     {
@@ -21,11 +21,30 @@ namespace ConsoleApp1.UI.Helpers
                 """);
         }
 
+        public static void showAllProducts(string row1, string row2, string row3, string row4)
+        {
+            Console.WriteLine("\n=============================================");
+            Console.WriteLine("-------- ALLA PRODUKTER -------");
+            // Gör så att denne skriver ut rows beroende på hur många det fins.
+        }
+        public static void showSummary()
+        {
+            // Gör så att denne skriver ut total prisberäkningarna beroende på antal enheter (iterationer)
+            Console.WriteLine("\n=============================================");
+            Console.WriteLine("-------- SAMMANFATTNING TOTALT -------");
+            Console.WriteLine("\nRegister: [nummer] enheter registerarde\n");
+            Console.WriteLine($"""
+                        Total pris exkl. moms:              {totalPrice} kr.
+                        Total pris inkl. moms (brutto):     {bruttoPris} kr.            
+                        """);
+            Console.WriteLine("=============================================");
+        }
+
         public static void visaMoms(int totalPrice, double bruttoPris)
         {
 
         }
-
+        // INMATNINGAR OCH FELHANTERINGAR
         public static decimal? readDecimal() // detta är en kontroll för att ange korrekt värde för decimal typ.
         {
             while(true)
@@ -71,6 +90,8 @@ namespace ConsoleApp1.UI.Helpers
                 """;
             return row;
         }
+
+
         
     }
 }
