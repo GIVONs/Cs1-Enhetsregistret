@@ -52,3 +52,129 @@ string row3 =
                 {
                     UI.ShowRow(id4, enhet4, enhetsTyp4, status4, price4, moms),
                 }
+
+
+------------------------------------ ENHET 4 --------------------------------------
+            // Risksystem - Beräkningar
+            bool checkScore = true;
+            // Risknivå - Beräkningar
+            bool lowRiskScore = riskScore <= 2;
+            bool mediumRiskScore = riskScore >= 3 && riskScore <= 5;
+            bool highRiskScore = riskScore >= 6 && riskScore <= 8;
+            bool criticalRiskScore = riskScore >= 9;
+
+
+            while (checkScore)
+            {
+                switch (status4)
+                {
+                    case "service":
+                        riskScore += 3;
+                        break;
+                    case "inaktiv":
+                        riskScore += 2;
+                        break;
+                }
+                if (kritiskMarkör == "J") { riskScore += 4; }
+                if (kritiskMarkör == "J" && (enhetsTyp4 == "nätvekrsutrustning")) { riskScore += 3; }
+                if (enhetsTyp4 == "projektor" && (price4 >= 900)) { riskScore += 2; } else if (enhetsTyp4 == "övrigt") { riskScore += 1; }
+                if (highPrice) { riskScore += 2; }
+
+                checkScore = false;
+            }
+   // ------------------ REGLER (Utskrifter av Bedömningar) ------------------------
+
+            string row4 = UI.ShowRow(id4, enhet4, enhetsTyp4, status4, price4, moms);
+
+            Console.Clear();
+            Console.WriteLine("\nNy enhet registrerat: ");
+            Console.WriteLine($"{row4}");
+
+            await Task.Delay(500);
+            Console.WriteLine("\nALLMÄN BEDÖMNING\n");
+            // Kostnadsbedömning:
+            if (highPrice) { Console.WriteLine("Kostnadsbedömning: Produkten har hög kostnad.\n"); }
+            else if (priceWithRange) { Console.WriteLine("Kostnadsbedömning: Prisen ligger i normal kostnad.\n"); }
+            else { Console.WriteLine("Kostnadsbedömning: Produkten har låg kostnad.\n"); }
+
+            // Prioritering:
+            if (prioProdukt) { Console.WriteLine("Prioriteringsstatus: Prioriterad produkt!\n"); }
+            else if (enhetsTyp4 == "övrigt" || status4 == "inaktiv") { Console.WriteLine("Prioriteringsstatus: Kontroll krävs\n"); }
+            else { Console.WriteLine("Prioriteringsstatus: Produkten är i normal skick\n"); }
+
+            // Riskbedömning (Del 8):
+            if (högRisk) { Console.WriteLine("Riskbedömning: Kritisk\n"); }
+            else if (medelRisk) { Console.WriteLine("Riskbedömning: Medelrisk\n"); }
+            else { Console.WriteLine("Riskbedömning: Låg risk\n"); }
+
+            // Kritisk bedömning:
+            if (omKritisk) { Console.WriteLine("Kris status: Teknisk kontroll krävs\n"); }
+            else if (status4 != "service" && isKritisk == false)
+            { Console.WriteLine("Kris status: Ingen omedelbar åtgärd\n"); }
+            else if (isKritisk && price4 >= 700)
+            { Console.WriteLine(""); }
+            else if (isKritisk && highPrice && (enhetsTyp4 == "projektor" || enhetsTyp4 == "dator"))
+            { Console.WriteLine("VARNING: Kritisk dyr utrustning!\n"); }
+
+
+------- efter servicebedöminng
+
+ // Riskpoäng - Bedöminng
+            await Task.Delay(500);
+            Console.WriteLine("\nRISKBEDÖMNING\n");
+            if (lowRiskScore)
+            {
+                Console.WriteLine($"""
+                        Riskpoäng:  {riskScore}
+                        Risknivå:   Låg
+                        """);
+            }
+            else if (mediumRiskScore)
+            {
+                Console.WriteLine($"""
+                        Riskpoäng:  {riskScore}
+                        Risknivå:   Medel
+                        """);
+            }
+            else if (highRiskScore)
+            {
+                Console.WriteLine($"""
+                        Riskpoäng:  {riskScore}
+                        Risknivå:   Hög
+                        """);
+            }
+            else if (criticalRiskScore)
+            {
+                Console.WriteLine($"""
+                        Riskpoäng:  {riskScore}
+                        Risknivå:   Kritisk
+                        """);
+            }
+
+            // Serviceprioritet - Bedöminng
+            Console.WriteLine("\nSERVICEBEDÖMNING\n");
+            if (status4 == "service")
+            {
+                Console.WriteLine($"""
+                        Serviceprioritet: Normal.
+                        """);
+            }
+            else if (highPrice && (status4 == "service"))
+            {
+                Console.WriteLine($"""
+                        Serviceprioritet: Hög.
+                        """);
+            }
+            else if (criticalRiskScore && (status4 == "service") || criticalRiskScore && (status4 == "inaktiv"))
+            {
+                Console.WriteLine($"""
+                        Serviceprioritet: Akut.
+                        """);
+            }
+            else
+            {
+                Console.WriteLine($"""
+                        Serviceprioritet: Ingen.
+                        """);
+            }
+            Console.WriteLine("---------------------------------------------");
