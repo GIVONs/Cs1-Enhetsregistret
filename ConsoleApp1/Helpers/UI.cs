@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleApp1.Logic;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -41,17 +42,57 @@ namespace ConsoleApp1.Helpers
 
                 [1] - Visa alla produkter
 
-                [2] - Mata in ny produkt
+                [2] - Registering för ny produkt
 
-                [3] - Visa rabatter
+                [3] - Visa rabatter & moms
 
-                [4] - Gå tillbaks
+                [4] - Gå tillbaka
 
                 ===========================================
 
                 """);
         }
 
+        public static void ShowSaleMenu()
+        {
+            Console.Clear();
+            Console.WriteLine(
+                """
+                ===========================================
+                                NYA ENHETEN
+                ===========================================
+                                   MENY
+
+                [1] - Ändra data för ny produkt
+                
+                [2] - Visa rabatter (inkl. moms)
+
+                [3] - Gå tillbaka
+
+                ===========================================
+
+                """);
+        }
+
+        public static void ChangeEntityDataMenu()
+        {
+            Console.Clear();
+            Console.WriteLine(
+                """
+                ===========================================
+                              NY ENHET - DATA
+                ===========================================
+                                   MENY
+
+                [1] - Ändra status
+                
+                [2] - Gå tillbaka
+
+                ===========================================
+
+                """); 
+
+        }
         public static void ShowBetaMenu()
         {
             Console.Clear();
@@ -131,17 +172,15 @@ namespace ConsoleApp1.Helpers
 
         }
 
-        public static string ShowRow(string? id, string? enhetsNamn, string? typ, string? status, string? price, string moms) // Single row
+        public static string ShowRow(string? id, string? enhetsNamn, string? typ, string? status, decimal price, decimal moms) // Single row
         {
 
-            // price och moms måste konverteras till decimal
-            decimal.TryParse(price, out decimal convertedPrice);
-            decimal.TryParse(moms, out decimal convertedMoms);
-
+            // price och moms måste konverteras till giltliga data-typ for giltliga tal för ekvation.
+            decimal bruttoCost = PriceCalc.CalculateBrutto(price, moms);
 
             string row =
                 $"""
-
+                ---------------------------------------------
                 ENHET              
                 ID:                 {id}
                 Namn:               {enhetsNamn}
@@ -149,24 +188,42 @@ namespace ConsoleApp1.Helpers
                 
                 Status:             {char.ToUpper(status?[0] ?? ' ') + status?.Substring(1)}
                 
-                Pris:               {convertedPrice * (1 * convertedMoms)} kr.
-                Pris exkl.moms:     {convertedPrice} kr.
-                
+                Pris:               {price} kr.
+                Pris inkl.moms:     {bruttoCost} kr.
                 ---------------------------------------------
                 """;
 
             return row;
         }
 
+        public static string ShowReducedPrices(decimal price, decimal moms, decimal vatRate)
+        {
+            Console.Clear();
+            string entity4PriceIndex = Console.WriteLine($"""
+                ========================================================================
+                NYA ENHETEN         PRICREDUCERING VS TOTALA PRISER                  
+
+                Pris exkl. moms (netto)             -               { } kr.
+                
+                Rabatt                              -               { } kr.      
+
+                Rebatterat pris inkl. moms          -               { } kr.
+
+                Momsbelopp                          -               { } kr.
+
+                Totalpris inkl. moms (brutto)       -               { } kr.
+                """);
+            return entity4PriceIndex;
+        }
+
         // --------------------------------- INMATNINGAR OCH FELHANTERINGAR ---------------------------------------------------
 
-        public static int ReadInteger(string input)
+        public static int ReadInteger(string input) // Skriv in string, få ut int.
         {
             while (true)
             {
                 Console.Clear();
                 Console.WriteLine("Vänligen skriv in ett heltal: ");
-                Console.WriteLine("Skriv EXIT om du vill avbryta");
                 input = Console.ReadLine();
 
                 bool readSuccess = int.TryParse(input, out int result); // vi får ut en int
@@ -181,112 +238,60 @@ namespace ConsoleApp1.Helpers
                 }
             }
         }
+
         public static string ReadString(string input)
         {
+            Console.Clear();
             Console.WriteLine("Vänligen mata in text: ");
+            input = Console.ReadLine().ToLower();
+
+            if (input.ToUpper().Equals("EXIT"))
+            {
+                return null; // Return tar oss ut ur loopen.
+            }
             if (input == null || input.Trim() == "")
             {
                 Console.WriteLine("\nFel inmatning.");
             }
             return input;
-        }
-        public static decimal? ReadDecimal(string input)
+        }// Skriv in string, få ut string
+
+        public static decimal ReadDecimal()
         {
             // Kontroll för att ange korrekt värde för decimal typ.
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("Vänligen skriv in ett decimalt värde");
-                Console.WriteLine("Skriv EXIT om du vill avbryta");
-                input = Console.ReadLine();
+                Console.WriteLine("Vänligen skriv in ett decimalt värde.");
 
-                if (input.ToUpper().Equals("EXIT"))
-                {
-                    return null; // Return tar oss ut ur loopen.
-                }
-
+                string input = Console.ReadLine();
                 bool readSuccess = decimal.TryParse(input, out decimal result);
                 if (!readSuccess)
                 {
                     Console.WriteLine("Vänligen skriv in ett giltlig värde");
-                    // Här finns ingen break eller return, så loopen fortsätter tills användaren skriver in ett giltigt värde eller EXIT.
                 }
                 else
                 {
-                    return result; // Return tar oss ut ur loopen.
-                }
-            }
-        }
-
-        public static decimal? ShowSalePercent(string sale, string price, int moms)
-        {
-            Console.WriteLine("Skriv in rabbatvärdet, från 0-100.");
-            while (true)
-            {
-                int number01 = ReadInteger(sale);
-
-                bool validRange = number01 <= 100 && number01 >= 0;
-                if (!validRange)
-                {
-                    Console.WriteLine("Fel inmatning, vänligen ange ett tal mellan 0-100. ");
-                } else
-                {
-                    decimal decimalNumber = number01 / 100;
-
-                    Console.WriteLine("Skriv in enhetens pris.");
-                    int number02 = ReadInteger(price);
-
-
-                    decimal result = number02 * decimalNumber * (1 * moms);
                     return result;
                 }
             }
+        }// Skriv in string, få ut decimal
 
 
-        }
-
-
-        //  ---------------------------------------- Ny Enhetsinmatning: Enhet 4 ----------------------------------------------
-        // Metoder kan bara returnera ett typ-värde, så du kan inte klistra in alla olika element som Riskbedömning, price4, enhet4 etc.
-        public static string InputEntity(string newEntity, string newEntityType, string entityID, string newEntityPrice)
+        public static decimal ParseToDecimal(string input)
         {
-            string justExit = "exit";
 
-            while (true)
+            bool readSuccess = decimal.TryParse(input, out decimal result);
+            if (!readSuccess)
             {
-
-                Console.WriteLine("\nMata in information om enhet 4.\nAnge namn på enheten: ");
-                var newEntityResult = ReadString(newEntity);
-                if (newEntity == justExit.ToLower())
-                {
-                    continue;
-                }
-
-
-                Console.WriteLine("Ange ID: ");
-                var entityIDResult = ReadString(entityID);
-
-                if (entityID == justExit.ToLower())
-                {
-                    continue;
-                }
-
-                Console.WriteLine("Ange pris: ");
-                
-                if (newEntityPrice == justExit.ToLower())
-                {
-                    continue;
-                }
+                Console.WriteLine("Kunde inte konvertera inmatningen till decimal.");
+                // Här finns ingen break eller return, så loopen fortsätter tills användaren skriver in ett giltigt värde eller EXIT.
             }
 
-        }
-/*        public static string InputEntity()
-        {
+            return result; // Return tar oss ut ur loopen.
 
         }
-        public static string InputEntity()
-        {
 
-        }*/
+
     }
 }

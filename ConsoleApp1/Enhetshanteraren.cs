@@ -13,58 +13,46 @@ namespace ConsoleApp1
         // -------------------------------- STARTVÄRDEN -----------------------
         // Ignorera "make variables readonly" meddelandet, readonly är för konstanta värden, inte flexibla.
         //  Readonly påpekar bara att dessa värden är inte användna än (dem blir färgade när dem används).
-        string moms = "0.25m";
+        //  Detta händer när du först försöker skapa dessa startvärden, innan du ens använder dem i senare kod.
 
         string enhet1 = "Projektor";
         string enhetsTyp1 = "Projektor";
         string id1 = "ID-100";
         string status1 = "Aktiv";
-        string price1 = "250";
-       
+        decimal price1 = 250;
 
         string enhet2 = "Samsung Display";
         string enhetsTyp2 = "Bildskärmsutrustning";
         string id2 = "ID-200";
         string status2 = "Aktiv";
-        string price2 = "100";
+        decimal price2 = 100;
 
         string enhet3 = "Laptop";
         string enhetsTyp3 = "Dator";
         string id3 = "ID-300";
         string status3 = "Service";
-        string price3 = "800";
+        decimal price3 = 800;
 
-        // om jag har strings för priser här,
-        // konverteras dem till decimal senare?
- 
-        // -----------------------------------------------------
-        //              ENHET4; Startvärden
+        // ENHET4; Startvärden
         string enhet4;
         string enhetstTyp4;
         string id4;
         string status4;
-        decimal price4; 
-
-        // -----------------------------------------------------
+        decimal price4;
 
 
         public void Start() 
         {
 
-            // ---------------- KALKYLERINGAR -------------------
-            decimal totalPrice;
-            //decimal momsPåPris = totalPrice * (1 * moms);
-            //double bruttoPris = Convert.ToDouble(totalPrice + momsPåPris);
-
-            double bruttoPrice4;
+            // ---------------- KALKYLRESURSER -------------------
+            decimal moms = 0.25m;
+           
 
             // --------------- Värden ----------------------------
             string row1 = UI.ShowRow(id1, enhet1, enhetsTyp1, status1, price1, moms);
             string row2 = UI.ShowRow(id2, enhet2, enhetsTyp2, status2, price2, moms);
             string row3 = UI.ShowRow(id3, enhet3, enhetsTyp3, status3, price3, moms);
             string row4 = null;
-
-
 
             bool programIsOn = true;
             Console.WriteLine("Välkommen till enhetsregistret!");
@@ -76,7 +64,7 @@ namespace ConsoleApp1
                 UI.ShowMenu1();
 
                 int valSiffra = Convert.ToInt16(Console.ReadLine());
-                if (valSiffra == 1 || valSiffra == 2 || valSiffra == 3)
+                if (valSiffra == 1 || valSiffra == 2 || valSiffra == 3 || valSiffra == 4)
                 {
 
                     switch (valSiffra)
@@ -91,18 +79,61 @@ namespace ConsoleApp1
                                 {
                                     case 1:
                                         UI.ShowAllProducts(row1, row2, row3, row4);
-
                                         break;
-                                    case 2:
 
-                                        UI.InputEntity(enhet4, enhetstTyp4, id4, price4);
-                                        // "row4" får värde vid denna punkt då, så den inte skrivs ut om inget värde finns.
+                                    case 2:
+                                        Console.WriteLine("\nMata in enhetens namn: ");
+                                        enhet4 = UI.ReadString(enhet4);
+
+                                        Console.WriteLine("\nMata in enhetens ID: ");
+                                        id4 = UI.ReadString(id4);
+
+                                        Console.WriteLine("\nMata in enhetens typ: ");
+                                        enhetstTyp4 = UI.ReadString(enhetstTyp4);
+
+                                        Console.WriteLine("\nAnge status (Aktiv / Inaktiv / Service): ");
+                                        status4 = UI.ReadString(status4);
+
+                                        Console.WriteLine("\nMata in enhetens pris: ");
+                                        price4 = UI.ReadDecimal(); // behöver inte en input argument 
+
                                         row4 = UI.ShowRow(id4, enhet4, enhetstTyp4, status4, price4, moms);
 
+                                        Console.WriteLine(row4);
+                                        Console.ReadKey();
                                         break;
-                                    case 3:
 
+                                    case 3:
+                                        if (enhet4 != null)
+                                        {
+                                            UI.ShowSaleMenu();
+                                            valSiffra = Convert.ToInt16((Console.ReadLine()));
+                                            if (valSiffra == 1 || valSiffra == 2)
+                                            {
+                                                switch (valSiffra)
+                                                {
+                                                    case 1:
+
+
+                                                        break;
+
+                                                    case 2:
+
+                                                        continue;
+
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Du måste mata in data för en enhet först.\n");
+
+                                            Console.WriteLine("Klicka på valfri tangent för att återvända.");
+                                            Console.ReadKey();
+                                            continue;
+                                        }
                                         break;
+
                                     case 4:
 
                                         continue; // 
@@ -133,6 +164,9 @@ namespace ConsoleApp1
 
                             break;
                         case 3:
+
+                            continue; // 
+                        case 4:
                             programIsOn = false;
                             break;
                     }
@@ -150,7 +184,15 @@ namespace ConsoleApp1
                         """);
                 }
 
-             Console.WriteLine("Klicka på ENTER för att stänga programemt...");
+             Console.WriteLine("""
+
+
+                 =========================================
+                 Klicka på ENTER för att stänga programemt...
+                 =========================================
+                 
+
+                 """);
             }
         }
     }
