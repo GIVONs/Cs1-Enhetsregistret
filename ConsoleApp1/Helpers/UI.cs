@@ -42,30 +42,7 @@ namespace ConsoleApp1.Helpers
 
                 [1] - Visa alla produkter
 
-                [2] - Registering för ny produkt
-
-                [3] - Visa rabatter & moms
-
-                [4] - Gå tillbaka
-
-                ===========================================
-
-                """);
-        }
-
-        public static void ShowSaleMenu()
-        {
-            Console.Clear();
-            Console.WriteLine(
-                """
-                ===========================================
-                                NYA ENHETEN
-                ===========================================
-                                   MENY
-
-                [1] - Ändra data för ny produkt
-                
-                [2] - Visa rabatter (inkl. moms)
+                [2] - Registering för ny produkt & priser
 
                 [3] - Gå tillbaka
 
@@ -74,7 +51,7 @@ namespace ConsoleApp1.Helpers
                 """);
         }
 
-        public static void ChangeEntityDataMenu()
+        public static void EntityRegistryMenu()
         {
             Console.Clear();
             Console.WriteLine(
@@ -84,15 +61,38 @@ namespace ConsoleApp1.Helpers
                 ===========================================
                                    MENY
 
-                [1] - Ändra status
+                [1] - Ändra data för ny produkt
+
+                [2] - Ändra status
                 
+                [3] - Visa prisreduceringar (index)
+
+                [4] - Gå tillbaka
+
+                ===========================================
+
+                """);
+
+        }
+        public static void ShowSaleMenu()
+        {
+            Console.Clear();
+            Console.WriteLine(
+                """
+                ===========================================
+                          PRISREDUCERINGAR: INDEX
+                ===========================================
+                                   MENY
+                
+                [1] - Visa prisberäkningar (moms, rea, etc.)
+
                 [2] - Gå tillbaka
 
                 ===========================================
 
-                """); 
-
+                """);
         }
+
         public static void ShowBetaMenu()
         {
             Console.Clear();

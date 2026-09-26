@@ -20,31 +20,7 @@ namespace ConsoleApp1.Logic
             
             return bruttoCost;
         }
-        public static decimal ShowSalePercent(decimal price, int moms)
-        {
-            Console.WriteLine("\nRabbatprocent från 0-100.");
-            while (true)
-            {
-                int saleValue = ReadInteger(price);
 
-                bool validRange = saleValue <= 100 && saleValue >= 0;
-                if (!validRange)
-                {
-                    Console.WriteLine("\nFel inmatning, vänligen ange ett tal mellan 0-100. ");
-                }
-                else
-                {
-                    decimal decimalNumber = saleValue / 100;
-
-                    Console.WriteLine("\nSkriv in enhetens pris.");
-                    int number02 = ReadInteger(price);
-
-
-                    decimal result = number02 * decimalNumber * (1 * moms);
-                    return result;
-                }
-            }
-        }
         public static void CalculateVatCost(decimal priceInput, string moms) // Beräknar momsbelopp.
         {
             // 

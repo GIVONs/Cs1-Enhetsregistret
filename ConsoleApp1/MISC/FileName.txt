@@ -67,3 +67,59 @@
 
 
         ---------------------------------------------------------
+
+
+                                        Console.WriteLine("\nMata in enhetens namn: ");
+                                        enhet4 = UI.ReadString(enhet4);
+
+                                        Console.WriteLine("\nMata in enhetens ID: ");
+                                        id4 = UI.ReadString(id4);
+
+                                        Console.WriteLine("\nMata in enhetens typ: ");
+                                        enhetstTyp4 = UI.ReadString(enhetstTyp4);
+
+                                        Console.WriteLine("\nAnge status (Aktiv / Inaktiv / Service): ");
+                                        status4 = UI.ReadString(status4);
+
+                                        Console.WriteLine("\nMata in enhetens pris: ");
+                                        price4 = UI.ReadDecimal(); // behöver inte en input argument 
+
+                                        row4 = UI.ShowRow(id4, enhet4, enhetstTyp4, status4, price4, moms);
+
+                                        Console.WriteLine(row4);
+                                        Console.ReadKey();
+                                        break;
+
+
+                                        -----------------
+
+
+                                        if (enhet4 != null)
+                                        {
+                                            UI.ShowSaleMenu();
+                                            valSiffra = Convert.ToInt16((Console.ReadLine()));
+                                            if (valSiffra == 1 || valSiffra == 2)
+                                            {
+                                                switch (valSiffra)
+                                                {
+                                                    case 1:
+
+
+                                                        break;
+
+                                                    case 2:
+
+                                                        continue;
+
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Du måste mata in data för en enhet först.\n");
+
+                                            Console.WriteLine("Klicka på valfri tangent för att återvända.");
+                                            Console.ReadKey();
+                                            continue;
+                                        }
+                                        break;
